@@ -1,0 +1,35 @@
+# yamllint disable rule:line-length rule:truthy
+---
+name: Update Formula
+
+on:
+  repository_dispatch:
+    types: [formula-update]
+
+jobs:
+  update:
+    name: Update mhost formula
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update formula version and sha256
+        env:
+          VERSION: ${{ github.event.client_payload.version }}
+        run: |
+          URL="https://github.com/lukaspustina/mhost/archive/refs/tags/${VERSION}.tar.gz"
+          SHA256=$(curl -sL "$URL" | shasum -a 256 | cut -d' ' -f1)
+          sed -i "s|url \".*\"|url \"${URL}\"|" Formula/mhost.rb
+          sed -i "s|sha256 \".*\"|sha256 \"${SHA256}\"|" Formula/mhost.rb
+          echo "Updated formula to ${VERSION} (sha256: ${SHA256})"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/mhost.rb
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Update mhost to ${VERSION}"
+          git push
+        env:
+          VERSION: ${{ github.event.client_payload.version }}
