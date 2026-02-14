@@ -6,6 +6,9 @@ on:
   repository_dispatch:
     types: [formula-update]
 
+permissions:
+  contents: write
+
 jobs:
   update:
     name: Update mhost formula
