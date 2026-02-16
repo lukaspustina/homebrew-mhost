@@ -9,7 +9,7 @@ class Mhost < Formula
   depends_on "rust" => :build
 
   def install
-    system "cargo", "install", "--features", "app", *std_cargo_args
+    system "cargo", "install", "--features", "tui", *std_cargo_args
 
     out_dir = Dir["target/release/build/mhost-*/out"].first
     bash_completion.install "#{out_dir}/mhost.bash"
@@ -19,5 +19,6 @@ class Mhost < Formula
 
   test do
     assert_match "mhost", shell_output("#{bin}/mhost --version")
+    assert_match "mdive", shell_output("#{bin}/mdive --help")
   end
 end
