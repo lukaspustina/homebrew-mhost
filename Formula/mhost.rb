@@ -1,8 +1,8 @@
 class Mhost < Formula
   desc "More than host - A modern take on the classic host DNS lookup utility"
   homepage "https://mhost.pustina.de"
-  url "https://github.com/lukaspustina/mhost/archive/refs/tags/v0.12.0.tar.gz"
-  sha256 "d48f5de205b20832b2b31e649f247bac0eea7dbc639c8e6ab46e5607bbc57d8a"
+  url "https://github.com/lukaspustina/mhost/archive/refs/tags/v0.12.1.tar.gz"
+  sha256 "c408c931badae22c96de0d51a6286ddd3a56a3c1124bb2c029a56f52590e3fdc"
   license any_of: ["MIT", "Apache-2.0"]
   head "https://github.com/lukaspustina/mhost.git", branch: "master"
 
